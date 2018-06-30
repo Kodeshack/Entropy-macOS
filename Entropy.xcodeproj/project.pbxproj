@@ -1,0 +1,582 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		001E5B4F20E76D34005B8A1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001E5B4E20E76D34005B8A1D /* AppDelegate.swift */; };
+		001E5B5120E76D34005B8A1D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001E5B5020E76D34005B8A1D /* ViewController.swift */; };
+		001E5B5320E76D36005B8A1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 001E5B5220E76D36005B8A1D /* Assets.xcassets */; };
+		001E5B5620E76D36005B8A1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 001E5B5420E76D36005B8A1D /* Main.storyboard */; };
+		001E5B6220E76D36005B8A1D /* EntropyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001E5B6120E76D36005B8A1D /* EntropyTests.swift */; };
+		40BE0288B7A2AC94E5D1B9C1 /* Pods_Entropy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A1E2919C8C54D84D91F01B /* Pods_Entropy.framework */; };
+		E9326636579506F7ED2B07C1 /* Pods_EntropyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174B74C1609CD62FCB0B87C5 /* Pods_EntropyTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		001E5B5E20E76D36005B8A1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 001E5B4320E76D34005B8A1D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 001E5B4A20E76D34005B8A1D;
+			remoteInfo = Entropy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		001E5B4B20E76D34005B8A1D /* Entropy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Entropy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		001E5B4E20E76D34005B8A1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		001E5B5020E76D34005B8A1D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		001E5B5220E76D36005B8A1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		001E5B5520E76D36005B8A1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		001E5B5720E76D36005B8A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		001E5B5D20E76D36005B8A1D /* EntropyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EntropyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		001E5B6120E76D36005B8A1D /* EntropyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntropyTests.swift; sourceTree = "<group>"; };
+		001E5B6320E76D36005B8A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		001E5B6E20E76F8C005B8A1D /* Entropy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Entropy.entitlements; sourceTree = "<group>"; };
+		174B74C1609CD62FCB0B87C5 /* Pods_EntropyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EntropyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CAA9B7F5C8EA9010293CD46 /* Pods-Entropy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Entropy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Entropy/Pods-Entropy.release.xcconfig"; sourceTree = "<group>"; };
+		784AC178A600498C7CB6E23F /* Pods-EntropyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntropyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EntropyTests/Pods-EntropyTests.release.xcconfig"; sourceTree = "<group>"; };
+		A0424D6BBB69CB67695F9AE6 /* Pods-Entropy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Entropy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Entropy/Pods-Entropy.debug.xcconfig"; sourceTree = "<group>"; };
+		B2A1E2919C8C54D84D91F01B /* Pods_Entropy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Entropy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E73F198B3DFA610DE5BA46CB /* Pods-EntropyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntropyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EntropyTests/Pods-EntropyTests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		001E5B4820E76D34005B8A1D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40BE0288B7A2AC94E5D1B9C1 /* Pods_Entropy.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		001E5B5A20E76D36005B8A1D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9326636579506F7ED2B07C1 /* Pods_EntropyTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		001E5B4220E76D34005B8A1D = {
+			isa = PBXGroup;
+			children = (
+				001E5B4D20E76D34005B8A1D /* Sources */,
+				001E5B6020E76D36005B8A1D /* Tests */,
+				001E5B4C20E76D34005B8A1D /* Products */,
+				7AD568291605D5842A695318 /* Pods */,
+				C7CDD251DC21C3540E32A23A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		001E5B4C20E76D34005B8A1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				001E5B4B20E76D34005B8A1D /* Entropy.app */,
+				001E5B5D20E76D36005B8A1D /* EntropyTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		001E5B4D20E76D34005B8A1D /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				001E5B4E20E76D34005B8A1D /* AppDelegate.swift */,
+				001E5B5020E76D34005B8A1D /* ViewController.swift */,
+				001E5B5420E76D36005B8A1D /* Main.storyboard */,
+				001E5B6C20E76DD5005B8A1D /* Supporting Files */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		001E5B6020E76D36005B8A1D /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				001E5B6120E76D36005B8A1D /* EntropyTests.swift */,
+				001E5B6320E76D36005B8A1D /* Info.plist */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		001E5B6C20E76DD5005B8A1D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				001E5B5220E76D36005B8A1D /* Assets.xcassets */,
+				001E5B5720E76D36005B8A1D /* Info.plist */,
+				001E5B6E20E76F8C005B8A1D /* Entropy.entitlements */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7AD568291605D5842A695318 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A0424D6BBB69CB67695F9AE6 /* Pods-Entropy.debug.xcconfig */,
+				6CAA9B7F5C8EA9010293CD46 /* Pods-Entropy.release.xcconfig */,
+				E73F198B3DFA610DE5BA46CB /* Pods-EntropyTests.debug.xcconfig */,
+				784AC178A600498C7CB6E23F /* Pods-EntropyTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C7CDD251DC21C3540E32A23A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B2A1E2919C8C54D84D91F01B /* Pods_Entropy.framework */,
+				174B74C1609CD62FCB0B87C5 /* Pods_EntropyTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		001E5B4A20E76D34005B8A1D /* Entropy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 001E5B6620E76D36005B8A1D /* Build configuration list for PBXNativeTarget "Entropy" */;
+			buildPhases = (
+				70726AD3CDF81230C4BB4C3E /* [CP] Check Pods Manifest.lock */,
+				001E5B4720E76D34005B8A1D /* Sources */,
+				001E5B4820E76D34005B8A1D /* Frameworks */,
+				001E5B4920E76D34005B8A1D /* Resources */,
+				DC96EE2FA6049D1B098202C5 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Entropy;
+			productName = Entropy;
+			productReference = 001E5B4B20E76D34005B8A1D /* Entropy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		001E5B5C20E76D36005B8A1D /* EntropyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 001E5B6920E76D36005B8A1D /* Build configuration list for PBXNativeTarget "EntropyTests" */;
+			buildPhases = (
+				F08570D0A870BFD58A62CDDE /* [CP] Check Pods Manifest.lock */,
+				001E5B5920E76D36005B8A1D /* Sources */,
+				001E5B5A20E76D36005B8A1D /* Frameworks */,
+				001E5B5B20E76D36005B8A1D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				001E5B5F20E76D36005B8A1D /* PBXTargetDependency */,
+			);
+			name = EntropyTests;
+			productName = EntropyTests;
+			productReference = 001E5B5D20E76D36005B8A1D /* EntropyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		001E5B4320E76D34005B8A1D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1000;
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = Kodeshack;
+				TargetAttributes = {
+					001E5B4A20E76D34005B8A1D = {
+						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
+					};
+					001E5B5C20E76D36005B8A1D = {
+						CreatedOnToolsVersion = 10.0;
+						TestTargetID = 001E5B4A20E76D34005B8A1D;
+					};
+				};
+			};
+			buildConfigurationList = 001E5B4620E76D34005B8A1D /* Build configuration list for PBXProject "Entropy" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 001E5B4220E76D34005B8A1D;
+			productRefGroup = 001E5B4C20E76D34005B8A1D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				001E5B4A20E76D34005B8A1D /* Entropy */,
+				001E5B5C20E76D36005B8A1D /* EntropyTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		001E5B4920E76D34005B8A1D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				001E5B5320E76D36005B8A1D /* Assets.xcassets in Resources */,
+				001E5B5620E76D36005B8A1D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		001E5B5B20E76D36005B8A1D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		70726AD3CDF81230C4BB4C3E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Entropy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DC96EE2FA6049D1B098202C5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Entropy/Pods-Entropy-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/EntropyKit/EntropyKit.framework",
+				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
+				"${BUILT_PRODUCTS_DIR}/OLMKit/OLMKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EntropyKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OLMKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Entropy/Pods-Entropy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F08570D0A870BFD58A62CDDE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EntropyTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		001E5B4720E76D34005B8A1D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				001E5B5120E76D34005B8A1D /* ViewController.swift in Sources */,
+				001E5B4F20E76D34005B8A1D /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		001E5B5920E76D36005B8A1D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				001E5B6220E76D36005B8A1D /* EntropyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		001E5B5F20E76D36005B8A1D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 001E5B4A20E76D34005B8A1D /* Entropy */;
+			targetProxy = 001E5B5E20E76D36005B8A1D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		001E5B5420E76D36005B8A1D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				001E5B5520E76D36005B8A1D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		001E5B6420E76D36005B8A1D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		001E5B6520E76D36005B8A1D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		001E5B6720E76D36005B8A1D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0424D6BBB69CB67695F9AE6 /* Pods-Entropy.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Sources/Supporting Files/Entropy.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kodeshack.Entropy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		001E5B6820E76D36005B8A1D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6CAA9B7F5C8EA9010293CD46 /* Pods-Entropy.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Sources/Supporting Files/Entropy.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kodeshack.Entropy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+		001E5B6A20E76D36005B8A1D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E73F198B3DFA610DE5BA46CB /* Pods-EntropyTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kodeshack.EntropyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Entropy.app/Contents/MacOS/Entropy";
+			};
+			name = Debug;
+		};
+		001E5B6B20E76D36005B8A1D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 784AC178A600498C7CB6E23F /* Pods-EntropyTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kodeshack.EntropyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Entropy.app/Contents/MacOS/Entropy";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		001E5B4620E76D34005B8A1D /* Build configuration list for PBXProject "Entropy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				001E5B6420E76D36005B8A1D /* Debug */,
+				001E5B6520E76D36005B8A1D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		001E5B6620E76D36005B8A1D /* Build configuration list for PBXNativeTarget "Entropy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				001E5B6720E76D36005B8A1D /* Debug */,
+				001E5B6820E76D36005B8A1D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		001E5B6920E76D36005B8A1D /* Build configuration list for PBXNativeTarget "EntropyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				001E5B6A20E76D36005B8A1D /* Debug */,
+				001E5B6B20E76D36005B8A1D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 001E5B4320E76D34005B8A1D /* Project object */;
+}

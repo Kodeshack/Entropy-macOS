@@ -1,0 +1,6 @@
+framework module EntropyKit {
+  umbrella header "EntropyKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
