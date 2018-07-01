@@ -31,7 +31,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   EntropyKit:
-    :commit: 6fcb4d901f2f1600543799a6e6a760136edc0796
+    :commit: 8c64717ea61b00d8de8098755826bb4e43aaf069
     :git: https://github.com/Kodeshack/EntropyKit.git
 
 SPEC CHECKSUMS:

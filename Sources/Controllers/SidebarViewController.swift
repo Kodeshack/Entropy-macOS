@@ -59,12 +59,13 @@ extension SidebarViewController: NSOutlineViewDelegate {
 
         let identifier = NSUserInterfaceItemIdentifier(rawValue: "DataCell")
         let cell = outlineView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
-        cell.textField?.stringValue = room.name ?? "Unnamed Room"
+        cell.textField?.stringValue = "#\(room.smartName)"
         return cell
     }
 
     func outlineViewSelectionDidChange(_: Notification) {
         guard let room = outlineView.item(atRow: outlineView.selectedRow) as? Room else { return }
         chatViewController.room = room
+        view.window?.title = "\(Bundle.main.applicationName) - #\(room.smartName)"
     }
 }
