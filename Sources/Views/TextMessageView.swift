@@ -82,6 +82,9 @@ class TextMessageView: NSView {
         container.replaceLayoutManager(layoutManager)
         body.replaceTextContainer(container)
 
+        body.drawsBackground = false
+        body.textColor = .labelColor
+
         body.string = messageBody
 
         body.isEditable = true
