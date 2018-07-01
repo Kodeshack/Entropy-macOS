@@ -10,6 +10,10 @@ clean:
 		-workspace Entropy.xcworkspace \
 		-scheme Entropy
 
+clean-containers:
+	@echo "+ $@"
+	@rm -rf ~/Library/Containers/com.kodeshack.Entropy*
+
 test:
 	@echo "+ $@"
 	@xcodebuild test \
