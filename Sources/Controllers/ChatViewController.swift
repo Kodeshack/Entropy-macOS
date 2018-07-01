@@ -3,6 +3,7 @@ import EntropyKit
 
 class ChatViewController: NSViewController {
     @IBOutlet private var tableView: NSTableView!
+    @IBOutlet private var messageView: NSTextView!
 
     private var messages: ObservablePersistedList<Message>?
     private var observerToken: ObservablePersistedList<Message>.ObserverToken?
@@ -22,10 +23,24 @@ class ChatViewController: NSViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+
+        messageView.delegate = self
     }
 
     deinit {
         observerToken?.invalidate()
+    }
+}
+
+// MARK: - Message Stuff
+
+extension ChatViewController {
+    private func send() {
+        guard let room = room else { return }
+
+        let body = messageView.string.trimmingCharacters(in: .whitespacesAndNewlines)
+        Entropy.default.sendMessage(room: room, body: body)
+        messageView.string = ""
     }
 }
 
@@ -51,5 +66,18 @@ extension ChatViewController: NSTableViewDelegate {
         let cell = tableView.makeView(withIdentifier: identifier, owner: tableView) as! NSTableCellView
         configure(cell: cell, at: row)
         return cell
+    }
+}
+
+// MARK: - NSTextViewDelegate
+
+extension ChatViewController: NSTextViewDelegate {
+    func textView(_: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        if commandSelector == #selector(insertNewline) {
+            send()
+            return true
+        } else {
+            return false
+        }
     }
 }
