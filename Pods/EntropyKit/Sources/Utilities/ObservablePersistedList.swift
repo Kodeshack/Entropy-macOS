@@ -15,13 +15,6 @@ public class ObservablePersistedList<T: Record> {
     private var observerTokens = Set<ObserverToken>()
     private var counter = UInt(0)
 
-//    init(database: Database, sql: String, callbackQueue: DispatchQueue = DispatchQueue.main) throws {
-//        self.database = database
-//        recordsController = try FetchedRecordsController(database.dbQueue, sql: sql, queue: callbackQueue)
-//        try setup()
-//    }
-//
-
     init(database: Database, sql: String, arguments: StatementArguments?, adapater: RowAdapter?, callbackQueue: DispatchQueue = DispatchQueue.main) throws {
         self.database = database
         recordsController = try FetchedRecordsController(database.dbQueue, sql: sql, arguments: arguments, adapter: adapater, queue: callbackQueue)
@@ -55,16 +48,6 @@ public class ObservablePersistedList<T: Record> {
 
         try recordsController.performFetch()
     }
-
-//    public subscript(section: Int, row: Int) -> T {
-//        get {
-//            return recordsController.record(at: IndexPath(row: row, section: section))
-//        }
-//    }
-//
-//    public func numberOfRecords(section: Int) -> Int {
-//        return recordsController.sections[section].numberOfRecords
-//    }
 
     func changeRequest(_ request: QueryInterfaceRequest<T>) throws {
         try recordsController.setRequest(request)
@@ -153,7 +136,7 @@ extension ObservablePersistedList {
         }
 
     #elseif canImport(AppKit)
-        public func addObserver<V: NSTableCellView>(for tableView: NSTableView, configureCell: @escaping (V, IndexPath) -> Void) -> ObserverToken {
+        public func addObserver<V: NSTableCellView>(for tableView: NSTableView, configureCell: @escaping (V, Int) -> Void) -> ObserverToken {
             return addObserver(
                 willChange: { [unowned tableView] in
                     tableView.beginUpdates()
@@ -161,17 +144,19 @@ extension ObservablePersistedList {
                 onChange: { [unowned tableView] _, change in
                     switch change {
                     case let .insertion(indexPath):
-                        tableView.insertRows(at: IndexSet(indexPath), withAnimation: .effectFade)
+                        let row = IndexSet(arrayLiteral: indexPath.item)
+                        tableView.insertRows(at: row, withAnimation: .effectFade)
                     case let .deletion(indexPath):
-                        tableView.removeRows(at: IndexSet(indexPath), withAnimation: .effectFade)
+                        let row = IndexSet(arrayLiteral: indexPath.item)
+                        tableView.removeRows(at: row, withAnimation: .effectFade)
                     case let .move(indexPath, newIndexPath, _):
                         tableView.moveRow(at: indexPath.item, to: newIndexPath.item)
                         if let cell = tableView.view(atColumn: indexPath.section, row: indexPath.item, makeIfNecessary: true) as? V {
-                            configureCell(cell, newIndexPath)
+                            configureCell(cell, newIndexPath.item)
                         }
                     case let .update(indexPath, _):
                         if let cell = tableView.view(atColumn: indexPath.section, row: indexPath.item, makeIfNecessary: true) as? V {
-                            configureCell(cell, indexPath)
+                            configureCell(cell, indexPath.item)
                         }
                     }
                 },
