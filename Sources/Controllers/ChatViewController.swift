@@ -25,6 +25,9 @@ class ChatViewController: NSViewController {
         tableView.delegate = self
 
         messageView.delegate = self
+
+        let nib = NSNib(nibNamed: "TextMessageView", bundle: Bundle.main)
+        tableView.register(nib, forIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TextMessageView"))
     }
 
     deinit {
@@ -51,10 +54,15 @@ extension ChatViewController: NSTableViewDataSource {
         return messages?.count ?? 0
     }
 
-    private func configure(cell: NSTableCellView, at row: Int) {
+    private func configure(cell: NSView, at row: Int) {
         guard let messages = messages else { return }
         let message = messages[row]
-        cell.textField?.stringValue = message.body
+
+        switch cell {
+        case let cell as TextMessageView:
+            cell.message = message
+        default: break
+        }
     }
 }
 
@@ -62,8 +70,8 @@ extension ChatViewController: NSTableViewDataSource {
 
 extension ChatViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
-        let identifier = NSUserInterfaceItemIdentifier("MessageView")
-        let cell = tableView.makeView(withIdentifier: identifier, owner: tableView) as! NSTableCellView
+        let identifier = NSUserInterfaceItemIdentifier("TextMessageView")
+        let cell = tableView.makeView(withIdentifier: identifier, owner: tableView)!
         configure(cell: cell, at: row)
         return cell
     }

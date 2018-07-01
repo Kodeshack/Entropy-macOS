@@ -16,7 +16,13 @@
 		40BE0288B7A2AC94E5D1B9C1 /* Pods_Entropy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A1E2919C8C54D84D91F01B /* Pods_Entropy.framework */; };
 		5177DA5520E8126F00388522 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5177DA5420E8126F00388522 /* ChatViewController.swift */; };
 		5177DA5720E81AE700388522 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5177DA5620E81AE700388522 /* MasterViewController.swift */; };
+		D2BC799820E8DF9A00925486 /* MessageBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BC799720E8DF9A00925486 /* MessageBodyView.swift */; };
+		D2BC799A20E8EC5C00925486 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BC799920E8EC5C00925486 /* Settings.swift */; };
 		D2E50ACA20E7F18D00925486 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E50AC920E7F18D00925486 /* SidebarViewController.swift */; };
+		D2E88EF220E8CA4500925486 /* TextMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E88EF120E8CA4500925486 /* TextMessageView.swift */; };
+		D2E88EF420E8CA6B00925486 /* TextMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2E88EF320E8CA6B00925486 /* TextMessageView.xib */; };
+		D2E88EF920E8CF5000925486 /* ImageMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E88EF820E8CF5000925486 /* ImageMessageView.swift */; };
+		D2E88EFB20E8CF6D00925486 /* ImageMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2E88EFA20E8CF6D00925486 /* ImageMessageView.xib */; };
 		E9326636579506F7ED2B07C1 /* Pods_EntropyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174B74C1609CD62FCB0B87C5 /* Pods_EntropyTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +55,13 @@
 		784AC178A600498C7CB6E23F /* Pods-EntropyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntropyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EntropyTests/Pods-EntropyTests.release.xcconfig"; sourceTree = "<group>"; };
 		A0424D6BBB69CB67695F9AE6 /* Pods-Entropy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Entropy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Entropy/Pods-Entropy.debug.xcconfig"; sourceTree = "<group>"; };
 		B2A1E2919C8C54D84D91F01B /* Pods_Entropy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Entropy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2BC799720E8DF9A00925486 /* MessageBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBodyView.swift; sourceTree = "<group>"; };
+		D2BC799920E8EC5C00925486 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		D2E50AC920E7F18D00925486 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
+		D2E88EF120E8CA4500925486 /* TextMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageView.swift; sourceTree = "<group>"; };
+		D2E88EF320E8CA6B00925486 /* TextMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextMessageView.xib; sourceTree = "<group>"; };
+		D2E88EF820E8CF5000925486 /* ImageMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageView.swift; sourceTree = "<group>"; };
+		D2E88EFA20E8CF6D00925486 /* ImageMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageMessageView.xib; sourceTree = "<group>"; };
 		E73F198B3DFA610DE5BA46CB /* Pods-EntropyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntropyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EntropyTests/Pods-EntropyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,7 +110,9 @@
 			children = (
 				00392ADB20E77C7800E19C86 /* Controllers */,
 				D2E50AC820E7E33900925486 /* Storyboards */,
+				D2E88EF020E8CA2A00925486 /* Views */,
 				001E5B4E20E76D34005B8A1D /* AppDelegate.swift */,
+				D2BC799920E8EC5C00925486 /* Settings.swift */,
 				001E5B6C20E76DD5005B8A1D /* Supporting Files */,
 			);
 			path = Sources;
@@ -161,6 +175,18 @@
 				00392AD720E7748600E19C86 /* Main.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		D2E88EF020E8CA2A00925486 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D2E88EF120E8CA4500925486 /* TextMessageView.swift */,
+				D2E88EF320E8CA6B00925486 /* TextMessageView.xib */,
+				D2E88EF820E8CF5000925486 /* ImageMessageView.swift */,
+				D2E88EFA20E8CF6D00925486 /* ImageMessageView.xib */,
+				D2BC799720E8DF9A00925486 /* MessageBodyView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,7 +278,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2E88EF420E8CA6B00925486 /* TextMessageView.xib in Resources */,
 				001E5B5320E76D36005B8A1D /* Assets.xcassets in Resources */,
+				D2E88EFB20E8CF6D00925486 /* ImageMessageView.xib in Resources */,
 				001E5B5620E76D36005B8A1D /* Login.storyboard in Resources */,
 				00392AD820E7748600E19C86 /* Main.storyboard in Resources */,
 			);
@@ -336,9 +364,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5177DA5720E81AE700388522 /* MasterViewController.swift in Sources */,
+				D2E88EF220E8CA4500925486 /* TextMessageView.swift in Sources */,
 				00392ADA20E77C7500E19C86 /* LoginViewController.swift in Sources */,
 				D2E50ACA20E7F18D00925486 /* SidebarViewController.swift in Sources */,
+				D2E88EF920E8CF5000925486 /* ImageMessageView.swift in Sources */,
 				5177DA5520E8126F00388522 /* ChatViewController.swift in Sources */,
+				D2BC799A20E8EC5C00925486 /* Settings.swift in Sources */,
+				D2BC799820E8DF9A00925486 /* MessageBodyView.swift in Sources */,
 				001E5B4F20E76D34005B8A1D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

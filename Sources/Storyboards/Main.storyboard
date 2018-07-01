@@ -167,23 +167,23 @@
             <objects>
                 <viewController title="Detail View" id="WL6-QE-8Xj" customClass="ChatViewController" customModule="Entropy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ll2-Fz-vCM">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k2M-fM-ssS">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="41" horizontalPageScroll="10" verticalLineScroll="41" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k2M-fM-ssS">
+                                <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                                 <clipView key="contentView" id="A82-oF-LTa">
-                                    <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="RDP-MW-p4P">
-                                            <rect key="frame" x="0.0" y="0.0" width="450" height="268"/>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" viewBased="YES" id="RDP-MW-p4P">
+                                            <rect key="frame" x="0.0" y="0.0" width="800" height="568"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <size key="intercellSpacing" width="3" height="2"/>
+                                            <size key="intercellSpacing" width="0.0" height="24"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="447" minWidth="40" maxWidth="1000" id="CAg-qr-hPT">
+                                                <tableColumn width="800" minWidth="40" maxWidth="1000" id="CAg-qr-hPT">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -197,11 +197,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="MessageView" id="yre-IM-sgm">
-                                                            <rect key="frame" x="1" y="1" width="447" height="17"/>
+                                                            <rect key="frame" x="0.0" y="12" width="800" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="iVr-Uh-zIf">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="447" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="800" height="17"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="ZnN-pL-NYv">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -235,19 +235,19 @@
                                 </scroller>
                             </scrollView>
                             <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="Juq-bC-ovg">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="32"/>
+                                <rect key="frame" x="0.0" y="0.0" width="800" height="32"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQM-Mq-FtV">
-                                        <rect key="frame" x="8" y="8" width="434" height="16"/>
+                                        <rect key="frame" x="8" y="8" width="784" height="16"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Hux-bP-oUc">
-                                            <rect key="frame" x="0.0" y="0.0" width="434" height="16"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="784" height="16"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsUndo="YES" spellingCorrection="YES" smartInsertDelete="YES" id="hBm-Wc-6M3">
-                                                    <rect key="frame" x="0.0" y="0.0" width="434" height="16"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="784" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <size key="minSize" width="434" height="16"/>
+                                                    <size key="minSize" width="784" height="16"/>
                                                     <size key="maxSize" width="840" height="10000000"/>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 </textView>
