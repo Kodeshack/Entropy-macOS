@@ -5,7 +5,7 @@ class TextMessageView: NSView {
     @IBOutlet private var avatarView: NSImageView!
     @IBOutlet private var displaynameLabel: NSTextField!
     @IBOutlet private var dateLabel: NSTextField!
-    @IBOutlet private var body: MessageBodyView!
+    @IBOutlet private var bodyLabel: NSTextField!
 
     private static let bigEmojiFont = NSFont.systemFont(ofSize: NSFont.systemFontSize * Settings.bigEmojiSizeFactor)
     private static let defaultFont = NSFont.systemFont(ofSize: NSFont.systemFontSize)
@@ -44,16 +44,10 @@ class TextMessageView: NSView {
 
         displaynameLabel.stringValue = sender.displayname
 
-        configureTextView(for: message.body)
+        configure(body: message.body)
 
         dateLabel.stringValue = TextMessageView.messageDateFormatter.string(for: message.date)!
         dateLabel.toolTip = TextMessageView.messageDetailDateFormatter.string(for: message.date)
-
-        if message.body.count <= Settings.maxBigEmojiLength && message.body.isEmojiOnly {
-            body.font = TextMessageView.bigEmojiFont
-        } else {
-            body.font = TextMessageView.defaultFont
-        }
 
         Entropy.default.avatar(for: sender.id) { [weak self] result, userID in
             // View still in memory?
@@ -68,33 +62,20 @@ class TextMessageView: NSView {
         }
     }
 
-    private func configureTextView(for messageBody: String) {
-        let storage = NSTextStorage()
-        let container = NSTextContainer()
-        let layoutManager = NSLayoutManager()
+    private func configure(body: String) {
+        if body.count <= Settings.maxBigEmojiLength && body.isEmojiOnly {
+            bodyLabel.font = TextMessageView.bigEmojiFont
+        } else {
+            bodyLabel.font = TextMessageView.defaultFont
+        }
 
-        container.widthTracksTextView = true
-        container.lineFragmentPadding = 0
+        bodyLabel.stringValue = body
 
-        layoutManager.usesFontLeading = false
-
-        layoutManager.replaceTextStorage(storage)
-        container.replaceLayoutManager(layoutManager)
-        body.replaceTextContainer(container)
-
-        body.drawsBackground = false
-        body.textColor = .labelColor
-
-        body.string = messageBody
-
-        body.isEditable = true
-        body.isAutomaticLinkDetectionEnabled = true
-        body.isAutomaticDataDetectionEnabled = true
-        body.checkTextInDocument(nil)
-        body.isEditable = false
-        body.isHorizontallyResizable = false
-        body.isVerticallyResizable = true
-
-        body.invalidateIntrinsicContentSize()
+        // Hightlight URLs.
+        let attributedMessage = NSMutableAttributedString(attributedString: bodyLabel.attributedStringValue)
+        for (url, range) in body.urls {
+            attributedMessage.addAttribute(.link, value: url, range: range)
+        }
+        bodyLabel.attributedStringValue = attributedMessage
     }
 }
