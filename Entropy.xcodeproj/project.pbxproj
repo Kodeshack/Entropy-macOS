@@ -13,6 +13,7 @@
 		001E5B6220E76D36005B8A1D /* EntropyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001E5B6120E76D36005B8A1D /* EntropyTests.swift */; };
 		00392AD820E7748600E19C86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00392AD720E7748600E19C86 /* Main.storyboard */; };
 		00392ADA20E77C7500E19C86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00392AD920E77C7500E19C86 /* LoginViewController.swift */; };
+		00E3B44D2157907800D3FD11 /* DragDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E3B44C2157907800D3FD11 /* DragDestinationView.swift */; };
 		40BE0288B7A2AC94E5D1B9C1 /* Pods_Entropy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A1E2919C8C54D84D91F01B /* Pods_Entropy.framework */; };
 		5177DA5520E8126F00388522 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5177DA5420E8126F00388522 /* ChatViewController.swift */; };
 		5177DA5720E81AE700388522 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5177DA5620E81AE700388522 /* MasterViewController.swift */; };
@@ -48,6 +49,7 @@
 		001E5B6E20E76F8C005B8A1D /* Entropy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Entropy.entitlements; sourceTree = "<group>"; };
 		00392AD720E7748600E19C86 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		00392AD920E77C7500E19C86 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		00E3B44C2157907800D3FD11 /* DragDestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragDestinationView.swift; sourceTree = "<group>"; };
 		174B74C1609CD62FCB0B87C5 /* Pods_EntropyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EntropyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5177DA5420E8126F00388522 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		5177DA5620E81AE700388522 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 		D2E88EF020E8CA2A00925486 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				00E3B44C2157907800D3FD11 /* DragDestinationView.swift */,
 				D2E88EF120E8CA4500925486 /* TextMessageView.swift */,
 				D2E88EF320E8CA6B00925486 /* TextMessageView.xib */,
 				D2E88EF820E8CF5000925486 /* ImageMessageView.swift */,
@@ -368,6 +371,7 @@
 				00392ADA20E77C7500E19C86 /* LoginViewController.swift in Sources */,
 				D2E50ACA20E7F18D00925486 /* SidebarViewController.swift in Sources */,
 				D2E88EF920E8CF5000925486 /* ImageMessageView.swift in Sources */,
+				00E3B44D2157907800D3FD11 /* DragDestinationView.swift in Sources */,
 				5177DA5520E8126F00388522 /* ChatViewController.swift in Sources */,
 				D2BC799A20E8EC5C00925486 /* Settings.swift in Sources */,
 				D2BC799820E8DF9A00925486 /* MessageBodyView.swift in Sources */,

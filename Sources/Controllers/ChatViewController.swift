@@ -8,6 +8,13 @@ class ChatViewController: NSViewController {
     private var messages: ObservablePersistedList<Message>?
     private var observerToken: ObservablePersistedList<Message>.ObserverToken?
 
+    /// directory URL used for accepting file promises
+    private lazy var destinationURL: URL = {
+        let destinationURL = FileManager.default.temporaryDirectory.appendingPathComponent("drops")
+        try? FileManager.default.createDirectory(at: destinationURL, withIntermediateDirectories: true, attributes: nil)
+        return destinationURL
+    }()
+
     var room: Room? {
         didSet {
             guard let room = room else { return }
@@ -28,6 +35,12 @@ class ChatViewController: NSViewController {
 
         let nib = NSNib(nibNamed: "TextMessageView", bundle: Bundle.main)
         tableView.register(nib, forIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TextMessageView"))
+
+        if let view = view as? DragDestinationView {
+            view.delegate = self
+            view.registerForDraggedTypes(NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0) })
+            view.registerForDraggedTypes([NSPasteboard.PasteboardType.fileURL])
+        }
     }
 
     deinit {
@@ -87,5 +100,63 @@ extension ChatViewController: NSTextViewDelegate {
         } else {
             return false
         }
+    }
+}
+
+// MARK: - DragDestinationViewDelegate
+
+extension ChatViewController: DragDestinationViewDelegate {
+    func draggingEntered(forView _: DragDestinationView, sender: NSDraggingInfo) -> NSDragOperation {
+        return sender.draggingSourceOperationMask.intersection([.copy])
+    }
+
+    func performDragOperation(forView _: DragDestinationView, sender: NSDraggingInfo) -> Bool {
+        let supportedClasses = [
+            NSFilePromiseReceiver.self,
+            NSURL.self,
+        ]
+
+        let searchOptions: [NSPasteboard.ReadingOptionKey: Any] = [
+            .urlReadingFileURLsOnly: true,
+        ]
+
+        sender.enumerateDraggingItems(options: [], for: nil, classes: supportedClasses, searchOptions: searchOptions) { draggingItem, _, _ in
+            switch draggingItem.item {
+            case let filePromiseReceiver as NSFilePromiseReceiver:
+                filePromiseReceiver.receivePromisedFiles(atDestination: self.destinationURL, options: [:], operationQueue: OperationQueue.current!) { fileURL, error in
+                    if let error = error {
+                        self.handleError(error)
+                    } else {
+                        self.handleFile(at: fileURL)
+                    }
+                }
+            case let fileURL as URL:
+                self.handleFile(at: fileURL)
+            default: break
+            }
+        }
+
+        return true
+    }
+
+    private func handleFile(at url: URL) {
+        let okDialog = NSAlert()
+        okDialog.messageText = "Are you sure you want to upload the file \(url.pathComponents.last!)?"
+        okDialog.alertStyle = .warning
+        okDialog.addButton(withTitle: "Send")
+        okDialog.addButton(withTitle: "Cancel")
+
+        guard okDialog.runModal() == .alertFirstButtonReturn else { return }
+
+        do {
+            let data = try Data(contentsOf: url)
+            Entropy.default.sendMedia(room: room!, filename: url.pathComponents.last!, mimeType: "application/octet-stream", data: data)
+        } catch {
+            print(error)
+        }
+    }
+
+    private func handleError(_ error: Error) {
+        print(error)
     }
 }
