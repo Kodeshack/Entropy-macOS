@@ -1,4 +1,3 @@
 import AppKit
 
-class ImageMessageView: NSView {
-}
+class ImageMessageView: NSView {}
