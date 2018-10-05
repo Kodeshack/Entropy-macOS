@@ -11,10 +11,11 @@ Table of Contents
 - [What?](#what-is-this)
 - [Why?](#why-would-i-want-to-do-that)
 - [How?](#how-do-i-install-it)
-    - [Command-Line Tool](#command-line-tool)
-    - [Xcode Source Editor Extension](#xcode-source-editor-extension)
-    - [Xcode Build Phase](#xcode-build-phase)
-    - [Git Pre-Commit Hook](#git-pre-commit-hook)
+    - [Command-line tool](#command-line-tool)
+    - [Xcode source editor extension](#xcode-source-editor-extension)
+    - [Xcode build phase](#xcode-build-phase)
+    - [VSCode plugin](#vscode-plugin)
+    - [Git pre-commit hook](#git-pre-commit-hook)
     - [On CI using Danger](#on-ci-using-danger)
 - [Usage](#so-what-does-swiftformat-actually-do)
     - [Options](#options)
@@ -23,8 +24,8 @@ Table of Contents
     - [Linting](#linting)
 - [FAQ](#faq)
 - [Cache](#cache)
-- [File Headers](#file-headers)
-- [Known Issues](#known-issues)
+- [File headers](#file-headers)
+- [Known issues](#known-issues)
 - [Credits](#credits)
 
 
@@ -138,7 +139,7 @@ If you prefer, you can also use unix pipes to include swiftformat as part of a c
 Omitting the `--output /path/to/file.swift` will print the formatted file to `stdout`.
 
 
-Xcode Source Editor Extension
+Xcode source editor extension
 -----------------------------
 
 **Installation:**
@@ -151,11 +152,11 @@ You'll find the latest version of the SwiftFormat for Xcode application inside t
 
 In Xcode, you'll find a SwiftFormat option under the Editor menu. You can use this to format either the current selection or the whole file.
 
-You can configure the formatting [rules](#rules) and [options](#options) used by the Xcode Source Editor Extension using the host application. There is currently no way to override these per-project, however you can import and export different configurations using the File menu. You will need to do this again each time you switch project.
+You can configure the formatting [rules](#rules) and [options](#options) used by the Xcode source editor extension using the host application. There is currently no way to override these per-project, however you can import and export different configurations using the File menu. You will need to do this again each time you switch project.
 
 The format of the configuration file is described in the [Config section](#config) below.
 
-**Note:** SwiftFormat for Xcode cannot automatically detect changes to an imported configuration file. If you update the `.swiftformat` file for your project, you will need to manually re-import that file into SwiftFormat for Xcode in order for the Xcode Source Editor Extension to use the new configuration.
+**Note:** SwiftFormat for Xcode cannot automatically detect changes to an imported configuration file. If you update the `.swiftformat` file for your project, you will need to manually re-import that file into SwiftFormat for Xcode in order for the Xcode source editor extension to use the new configuration.
 
 
 Xcode build phase
@@ -196,6 +197,12 @@ fi
 ```
 
 This is not recommended for shared projects however, as different team members using different versions of SwiftFormat may result in noise in the commits as code gets reformatted inconsistently.
+
+
+VSCode plugin
+--------------
+
+If you prefer to use Microsoft's [VSCode](https://code.visualstudio.com) editor for writing Swift, [Valentin Knabel](https://github.com/vknabel) has created a [VSCode plugin](https://marketplace.visualstudio.com/items?itemName=vknabel.vscode-swiftformat) for SwiftFormat.
 
 
 Git pre-commit hook
@@ -305,7 +312,7 @@ There is no need to manually re-enable a rule after using the `next` directive.
 
 Here are all the rules that SwiftFormat currently applies, and the effects that they have:
 
-***blankLinesAtEndOfScope*** - removes trailing blank lines from inside braces, brackets, parens or chevrons. This rule can be configured using the `--removelines` option:
+***blankLinesAtEndOfScope*** - removes trailing blank lines from inside braces, brackets, parens or chevrons:
 
 ```diff
   func foo() {
@@ -333,7 +340,7 @@ Here are all the rules that SwiftFormat currently applies, and the effects that 
   ]
 ```
 
-***blankLinesAtStartOfScope*** - removes leading blank lines from inside braces, brackets, parens or chevrons. This rule can be configured using the `--removelines` option:
+***blankLinesAtStartOfScope*** - removes leading blank lines from inside braces, brackets, parens or chevrons:
 
 ```diff
   func foo() {
@@ -361,7 +368,7 @@ Here are all the rules that SwiftFormat currently applies, and the effects that 
   ]
 ```
 
-***blankLinesBetweenScopes*** - adds a blank line before each class, struct, enum, extension, protocol or function. This rule can be configured using the `--insertlines` option:
+***blankLinesBetweenScopes*** - adds a blank line before each class, struct, enum, extension, protocol or function:
 
 ```diff
   func foo() {
@@ -385,7 +392,7 @@ Here are all the rules that SwiftFormat currently applies, and the effects that 
   var quux: Int
 ```
 
-***blankLinesAroundMark*** - adds a blank line before and after each `MARK:` comment. This rule can be configured using the `--insertlines` option:
+***blankLinesAroundMark*** - adds a blank line before and after each `MARK:` comment:
 
 ```diff
   func foo() {
@@ -407,7 +414,7 @@ Here are all the rules that SwiftFormat currently applies, and the effects that 
   }
 ```
                          
-***braces*** - implements K&R (default) or Allman-style indentation, depending on the `--allman` option:
+***braces*** - implements K&R (default, `--allman false`) or Allman-style indentation (`--allman true`):
 
 ```diff
 - if x
@@ -427,7 +434,7 @@ Here are all the rules that SwiftFormat currently applies, and the effects that 
   }
 ```
                          
-***consecutiveBlankLines*** - reduces multiple sequential blank lines to a single blank line
+***consecutiveBlankLines*** - reduces multiple sequential blank lines to a single blank line:
 
 ```diff
   func foo() {
@@ -467,7 +474,7 @@ Here are all the rules that SwiftFormat currently applies, and the effects that 
   #endif
 ```
 
-***elseOnSameLine*** - controls whether an `else`, `catch` or `while` keyword after a `}` appears on the same line, depending on the `--elseposition` option:
+***elseOnSameLine*** - controls whether an `else`, `catch` or `while` keyword after a `}` appears on the same line, depending on the `--elseposition` option (`same-line` (default) or `next-line`):
 
 ```diff
   if x {
@@ -532,7 +539,7 @@ Here are all the rules that SwiftFormat currently applies, and the effects that 
 
     See the File Headers section below for more information.
 
-***hoistPatternLet*** - moves `let` or `var` bindings inside patterns to the start of the expression, or vice-versa. Use the `--patternlet` command-line option to toggle between hoisted and inline style.
+***hoistPatternLet*** - moves `let` or `var` bindings inside patterns to the start of the expression, or vice-versa, depending on the `--patternlet` option (`hoist` or `inline`).
 
 ```diff
 - (let foo, let bar) = baz()
@@ -549,7 +556,7 @@ Here are all the rules that SwiftFormat currently applies, and the effects that 
   }
 ```
 
-***indent*** - adjusts leading whitespace based on scope and line wrapping. Uses either tabs or spaces, depending on the `--indent` option. By default, `case` statements will be indented level with their containing `switch`, but this can be controlled with the `--indentcase` options. Also affects comments and `#if ...` statements, depending on the configuration of the `--comments` and `--ifdef` options:
+***indent*** - adjusts leading whitespace based on scope and line wrapping. Uses either tabs (`--indent tab`) or spaces (`--indent 4`). By default, `case` statements will be indented level with their containing `switch`, but this can be controlled with the `--indentcase` options. Also affects comments and `#if ...` statements, depending on the configuration of the `--comments` option (`indent` or `ignore`) and the `--ifdef` option (`indent` (default), `noindent` or `ignore`):
 
 ```diff
   if x {
@@ -591,11 +598,15 @@ Here are all the rules that SwiftFormat currently applies, and the effects that 
   }
 ```
 
-***linebreakAtEndOfFile*** - ensures that the last line of the file is empty.
+***linebreakAtEndOfFile*** - ensures that the last line of the file is empty:
        
-***linebreaks*** - normalizes all linebreaks to use the same character, as specified in options (either CR, LF or CRLF, depending on the `--linebreaks` option).
+***linebreaks*** - normalizes all linebreaks to use the same character, depending on the `--linebreaks` option (`cr`, `crlf` or `lf`).
 
-***numberFormatting*** - handles case and grouping of number literals, depending on the `--hexliteralcase`, `--exponentcase`, `--hexgrouping`, `--binarygrouping`, `--decimalgrouping`, `--octalgrouping`, `--fractiongrouping` and `--exponentgrouping` options:
+***numberFormatting*** - handles case and grouping of number literals, depending on the following options:
+- `--hexliteralcase` and `--exponentcase` (`uppercase` (default) or `lowercase`)
+- `--hexgrouping`, `--binarygrouping`, `--octalgrouping` (`4,8` (default grouping,threshold), `none` or `ignore`) 
+- `--decimalgrouping` (`3,6` (default grouping,threshold), `none` or `ignore`)
+- `--fractiongrouping` and `--exponentgrouping` (`disabled` (default) or `enabled`)
 
 ```diff
 - let color = 0xFF77A5
@@ -607,7 +618,7 @@ Here are all the rules that SwiftFormat currently applies, and the effects that 
 + let big = 123_456.123
 ```
 
-***ranges*** - controls the spacing around range operators. By default, a space is added, but this can be configured using the `--ranges` option.
+***ranges*** - controls the spacing around range operators. By default, a space is added, but this can be configured using the `--ranges` option (`spaced` (default) or `nospace`).
 
 ***redundantBackticks*** - removes unnecessary escaping of identifiers using backticks, e.g. in cases where the escaped word is not a keyword, or is not ambiguous in that context:
 
@@ -759,7 +770,7 @@ var foo: Int? = 0
 + String("text")
 ```
     
-***semicolons*** - removes semicolons at the end of lines and optionally (depending on the `--semicolons` option) replaces inline semicolons with a linebreak:
+***semicolons*** - removes semicolons at the end of lines.  Also replaces inline semicolons with a linebreak, depending on the `--semicolons` option (`inline` (default) or `never`).
 
 ```diff
 - let foo = 5;
@@ -802,7 +813,7 @@ goto(fail)
 + #endif
 ```
 
-***spaceAroundBraces*** - contextually adds or removes space around { }. For example:
+***spaceAroundBraces*** - contextually adds or removes space around `{ ... }`:
 
 ```diff
 - foo.filter{ return true }.map{ $0 }
@@ -814,7 +825,7 @@ goto(fail)
 + foo({})
 ```
 
-***spaceAroundBrackets*** - contextually adjusts the space around [ ]. For example:
+***spaceAroundBrackets*** - contextually adjusts the space around `[ ... ]`:
 
 ```diff
 - foo as[String]
@@ -826,7 +837,7 @@ goto(fail)
 + foo = bar[5]
 ```
 
-***spaceAroundComments*** - adds space around /* ... */ comments and before // comments. Configure using `--comments` option:
+***spaceAroundComments*** - adds space around `/* ... */` comments and before `//` comments, depending on the `--comments` option (`indent` (default) or `ignore`).
 
 ```diff
 - let a = 5// assignment
@@ -838,14 +849,14 @@ goto(fail)
 + func foo() { /* no-op */ }
 ```
 
-***spaceAroundGenerics*** - removes the space around < >. For example:
+***spaceAroundGenerics*** - removes the space around `< ... >`:
 
 ```diff
 - Foo <Bar> ()
 + Foo<Bar>()
 ```
 
-***spaceAroundOperators*** - contextually adjusts the space around infix operators. Also adds or removes the space between an operator function declaration and its arguments, depending on value of the `--operatorfunc` option.
+***spaceAroundOperators*** - contextually adjusts the space around infix operators. Also adds or removes the space between an operator function declaration and its arguments, depending on the `--operatorfunc` option (`spaced` (default) or `nospace`).
 
 ```diff
 - foo . bar()
@@ -862,7 +873,7 @@ goto(fail)
 + func == (lhs: Int, rhs: Int) -> Bool
 ```
 
-***spaceAroundParens*** - contextually adjusts the space around ( ). For example:
+***spaceAroundParens*** - contextually adjusts the space around `( ... )`:
 
 ```diff
 - init (foo)
@@ -874,21 +885,21 @@ goto(fail)
 + switch (x) {
 ```
 
-***spaceInsideBraces*** - adds space inside `{ ... }`. For example:
+***spaceInsideBraces*** - adds space inside `{ ... }`:
 
 ```diff
 - foo.filter {return true}
 + foo.filter { return true }
 ```
 
-***spaceInsideBrackets*** - removes the space inside `[ ... ]`. For example:
+***spaceInsideBrackets*** - removes the space inside `[ ... ]`:
 
 ```diff
 - [ 1, 2, 3 ]
 + [1, 2, 3]
 ```
 
-***spaceInsideComments*** - adds space inside `/* ... */` comments and at the start of `//` comments. Configure using `--comments` option:
+***spaceInsideComments*** - adds a space inside `/* ... */` comments and at the start of `//` comments, depending on the `--comments` option (`indent` (default) or `ignore`).
 
 ```diff
 - let a = 5 //assignment
@@ -900,14 +911,14 @@ goto(fail)
 + func foo() { /* no-op */ }
 ```
 
-***spaceInsideGenerics*** - removes the space inside `< ... >`. For example:
+***spaceInsideGenerics*** - removes the space inside `< ... >`:
 
 ```diff
 - Foo< Bar, Baz >
 + Foo<Bar, Baz>
 ```
 
-***spaceInsideParens*** - removes the space inside `( ... )`. For example:
+***spaceInsideParens*** - removes the space inside `( ... )`:
 
 ```diff
 - ( a, b )
@@ -938,7 +949,7 @@ goto(fail)
 + @IBOutlet var label: UILabel!
 ```
 
-***trailingClosures*** - converts the last closure argument in a function call to trailing closure syntax where possible.
+***trailingClosures*** - converts the last closure argument in a function call to trailing closure syntax where possible:
 
 ```diff
 - DispatchQueue.main.async(execute: {
@@ -950,9 +961,9 @@ goto(fail)
 + }
 ```
 
-**NOTE:** Occasionally, using trailing closure syntax makes a function call ambiguous, and the compiler can't understand it. Since SwiftFormat isn't able to detect this in all cases, the `trailingClosures` rule is disabled by default, and must be manually enabled by adding `--enable trailingClosures` to the command-line.
+**NOTE:** Occasionally, using trailing closure syntax makes a function call ambiguous, and the compiler can't understand it. Since SwiftFormat isn't able to detect this in all cases, the `trailingClosures` rule is disabled by default, and must be manually enabled via the `--enable trailingClosures` option.
 
-***trailingCommas*** - adds or removes trailing commas from the last item in an array or dictionary literal, depending on the `--commas` option:
+***trailingCommas*** - adds or removes trailing commas from the last item in an array or dictionary literal, depending on the `--commas` option (`always` (default) or `inline`).
 
 ```diff
   let array = [
@@ -968,9 +979,9 @@ goto(fail)
   ]
 ```
 
-***trailingSpace*** - removes the whitespace at the end of a line. This rule can be configured using the `--trimwhitespace` option.
+***trailingSpace*** - removes the whitespace at the end of a line, depending on the `--trimwhitespace` option (`always` (default) or `nonblank-lines`).
  
-***todos*** - ensures that `TODO:`, `MARK:` and `FIXME:` comments include the trailing colon (else they're ignored by Xcode)
+***todos*** - ensures that `TODO:`, `MARK:` and `FIXME:` comments include the trailing colon (else they're ignored by Xcode):
 
 ```diff
 - /* TODO fix this properly */
@@ -982,7 +993,7 @@ goto(fail)
 + // MARK: - UIScrollViewDelegate
 ```
 
-***unusedArguments*** - marks unused arguments in functions and closures with `_` to make it clear they aren't used. Use the `--stripunusedargs` option to configure which argument types are affected.
+***unusedArguments*** - marks unused arguments in functions and closures with `_` to make it clear they aren't used. Use the `--stripunusedargs` option to configure which argument types are affected (`always` (default), `closure-only` or `unnamed-only`).
 
 ```diff
 - func foo(bar: Int, baz: String) {
@@ -1014,7 +1025,7 @@ goto(fail)
   }
 ```
     
-***void*** - standardizes the use of `Void` vs an empty tuple `()` to represent empty argument lists and return values, depending on the `--empty` option:
+***void*** - standardizes the use of `Void` vs an empty tuple `()` to represent empty argument lists and return values, depending on the `--empty` option (`void` (default) or `tuple`).
 
 ```diff
 - let foo: () -> (
@@ -1036,7 +1047,7 @@ goto(fail)
 + func quux() -> Void
 ```
 
-***wrapArguments*** - wraps function arguments and collection literals depending on the `--wraparguments`, and `--wrapcollections` modes specified, and the `--closingparen` option. E.g. for `--wraparguments beforefirst` and `--closingparen balanced`:
+***wrapArguments*** - wraps function arguments and collection literals depending on the `--wraparguments` and `--wrapcollections` options (`beforefirst`, `afterfirst` or `preserve`) and the `--closingparen` option (`balanced` (default) or `same-line`). E.g. for `--wraparguments beforefirst` and `--closingparen balanced`:
 
 ```diff
 - func foo(bar: Int,
@@ -1150,7 +1161,7 @@ There haven't been many questions yet, but here's what I'd like to think people 
 
 > If there is a rule that you don't like, and which cannot be configured to your liking via the command-line options, you can disable the rule by using the `--disable` argument, followed by the name of the rule. You can display a list of all rules using the `--rules` argument, and their behaviors are documented above this section in the README.
 
-> If you are using the Xcode Source Editor Extension, rules and options can be configured using the [SwiftFormat for Xcode](#xcode-source-editor-extension) host application. Unfortunately, due to limitation of the Extensions API, there is no way to configure these on a per-project basis.
+> If you are using the Xcode source editor extension, rules and options can be configured using the [SwiftFormat for Xcode](#xcode-source-editor-extension) host application. Unfortunately, due to limitation of the Extensions API, there is no way to configure these on a per-project basis.
 
 > If the options you want aren't exposed, and disabling the rule doesn't solve the problem, the rules are implemented as functions in the file `Rules.swift`, so you can modify them and build a new version of the command-line tool. If you think your changes might be generally useful, make a pull request.
 
@@ -1338,12 +1349,12 @@ Known issues
 Credits
 ------------
 
-* @tonyarnold - Xcode source editor extension
-* @vinceburn - Xcode extension settings UI
-* @bourvill - Git pre-commit hook script
-* @palleas - Homebrew formula
-* @aliak00 - Several path-related CLI enhancements
-* @yonaskolb - Swift Package Manager integration
-* @nicklockwood - Everything else
+* [Tony Arnold](https://github.com/tonyarnold) - Xcode source editor extension
+* [Vincent Bernier](https://github.com/vinceburn) - Xcode extension settings UI
+* [Maxime Marinel](https://github.com/bourvill) - Git pre-commit hook script
+* [Romain Pouclet](https://github.com/palleas) - Homebrew formula
+* [Ali Akhtarzada](https://github.com/aliak00) - Several path-related CLI enhancements
+* [Yonas Kolb](https://github.com/yonaskolb) - Swift Package Manager integration
+* [Nick Lockwood](https://github.com/nicklockwood) - Everything else
 
 ([Full list of contributors](https://github.com/nicklockwood/SwiftFormat/graphs/contributors))
