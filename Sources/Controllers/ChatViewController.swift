@@ -198,7 +198,7 @@ extension ChatViewController: DragDestinationViewDelegate {
 
         do {
             let data = try Data(contentsOf: url)
-            Entropy.default.sendMedia(room: room!, filename: url.pathComponents.last!, mimeType: "application/octet-stream", data: data)
+            Entropy.default.sendMedia(room: room!, filename: url.pathComponents.last!, data: data)
         } catch {
             print(error)
         }
