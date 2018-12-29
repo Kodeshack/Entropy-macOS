@@ -63,7 +63,7 @@ class TextMessageView: NSView {
     }
 
     private func configure(body: String) {
-        if body.count <= Settings.maxBigEmojiLength && body.isEmojiOnly {
+        if body.count <= Settings.maxBigEmojiLength, body.isEmojiOnly {
             bodyLabel.font = TextMessageView.bigEmojiFont
         } else {
             bodyLabel.font = TextMessageView.defaultFont

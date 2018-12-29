@@ -141,7 +141,7 @@ extension ChatViewController: NSTextViewDelegate {
     }
 
     func textView(_: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
-        if commandSelector == #selector(insertNewline) && !newLineModifier {
+        if commandSelector == #selector(insertNewline), !newLineModifier {
             send()
             updateMessageInputLayout()
             return true
