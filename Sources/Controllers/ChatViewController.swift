@@ -84,6 +84,8 @@ extension ChatViewController: NSTableViewDataSource {
         switch cell {
         case let cell as TextMessageView:
             cell.message = message
+        case let cell as ImageMessageView:
+            cell.message = message
         default: break
         }
     }
@@ -93,12 +95,27 @@ extension ChatViewController: NSTableViewDataSource {
 
 extension ChatViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
-        let identifier = NSUserInterfaceItemIdentifier("TextMessageView")
+        let message = messages![row] // `messages` should exist because the NSTableView shouldn't request the cell otherwise.
+
+        let identifier: NSUserInterfaceItemIdentifier
+        switch message.type {
+        case .image:
+            identifier = NSUserInterfaceItemIdentifier("ImageMessageView")
+        default:
+            identifier = NSUserInterfaceItemIdentifier("TextMessageView")
+        }
+
         let cell: NSView
         if let protoCell = tableView.makeView(withIdentifier: identifier, owner: tableView) {
             cell = protoCell
         } else {
-            cell = TextMessageView(frame: .zero)
+            switch message.type {
+            case .image:
+                cell = ImageMessageView(frame: .zero)
+            default:
+                cell = TextMessageView(frame: .zero)
+            }
+
             cell.identifier = identifier
         }
         configure(cell: cell, at: row)

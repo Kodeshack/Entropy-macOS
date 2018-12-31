@@ -2,13 +2,13 @@ import AppKit
 import EntropyKit
 
 class TextMessageView: NSView {
-    private let avatarView: NSImageView = {
+    let avatarView: NSImageView = {
         let imageView = NSImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
-    private let displaynameLabel: NSTextField = {
+    let displaynameLabel: NSTextField = {
         let label = NSTextField(frame: .zero)
         label.isEditable = false
         label.drawsBackground = false
@@ -17,7 +17,7 @@ class TextMessageView: NSView {
         return label
     }()
 
-    private let dateLabel: NSTextField = {
+    let dateLabel: NSTextField = {
         let label = NSTextField(frame: .zero)
         label.isEditable = false
         label.drawsBackground = false
@@ -28,7 +28,7 @@ class TextMessageView: NSView {
         return label
     }()
 
-    private let bodyLabel: NSTextField = {
+    let bodyLabel: NSTextField = {
         let label = NSTextField(frame: .zero)
         label.isSelectable = true
         label.isEditable = false
@@ -90,7 +90,7 @@ class TextMessageView: NSView {
 
             NSLayoutConstraint(item: bodyLabel, attribute: .top, relatedBy: .equal, toItem: displaynameLabel, attribute: .bottom, multiplier: 1.0, constant: .ALDefaultSpacing),
             bodyLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.ALDefaultSpacing),
-            bodyLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            bodyLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
             bodyLabel.leadingAnchor.constraint(equalTo: displaynameLabel.leadingAnchor),
         ])
     }
@@ -99,7 +99,7 @@ class TextMessageView: NSView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func configure(_ message: Message) {
+    func configure(_ message: Message) {
         guard let sender = message.sender else { return }
 
         displaynameLabel.stringValue = sender.displayname

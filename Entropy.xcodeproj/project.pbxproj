@@ -22,7 +22,6 @@
 		D2E50ACA20E7F18D00925486 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E50AC920E7F18D00925486 /* SidebarViewController.swift */; };
 		D2E88EF220E8CA4500925486 /* TextMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E88EF120E8CA4500925486 /* TextMessageView.swift */; };
 		D2E88EF920E8CF5000925486 /* ImageMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E88EF820E8CF5000925486 /* ImageMessageView.swift */; };
-		D2E88EFB20E8CF6D00925486 /* ImageMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2E88EFA20E8CF6D00925486 /* ImageMessageView.xib */; };
 		E9326636579506F7ED2B07C1 /* Pods_EntropyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174B74C1609CD62FCB0B87C5 /* Pods_EntropyTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,7 +60,6 @@
 		D2E50AC920E7F18D00925486 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		D2E88EF120E8CA4500925486 /* TextMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageView.swift; sourceTree = "<group>"; };
 		D2E88EF820E8CF5000925486 /* ImageMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageView.swift; sourceTree = "<group>"; };
-		D2E88EFA20E8CF6D00925486 /* ImageMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageMessageView.xib; sourceTree = "<group>"; };
 		E73F198B3DFA610DE5BA46CB /* Pods-EntropyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EntropyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EntropyTests/Pods-EntropyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,7 +190,6 @@
 				00E3B44C2157907800D3FD11 /* DragDestinationView.swift */,
 				D2E88EF120E8CA4500925486 /* TextMessageView.swift */,
 				D2E88EF820E8CF5000925486 /* ImageMessageView.swift */,
-				D2E88EFA20E8CF6D00925486 /* ImageMessageView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -289,7 +286,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				001E5B5320E76D36005B8A1D /* Assets.xcassets in Resources */,
-				D2E88EFB20E8CF6D00925486 /* ImageMessageView.xib in Resources */,
 				001E5B5620E76D36005B8A1D /* Login.storyboard in Resources */,
 				00392AD820E7748600E19C86 /* Main.storyboard in Resources */,
 			);
