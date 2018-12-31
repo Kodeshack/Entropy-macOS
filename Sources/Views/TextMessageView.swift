@@ -2,41 +2,101 @@ import AppKit
 import EntropyKit
 
 class TextMessageView: NSView {
-    @IBOutlet private var avatarView: NSImageView!
-    @IBOutlet private var displaynameLabel: NSTextField!
-    @IBOutlet private var dateLabel: NSTextField!
-    @IBOutlet private var bodyLabel: NSTextField!
+    private let avatarView: NSImageView = {
+        let imageView = NSImageView(frame: .zero)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
+    private let displaynameLabel: NSTextField = {
+        let label = NSTextField(frame: .zero)
+        label.isEditable = false
+        label.drawsBackground = false
+        label.isBordered = false
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let dateLabel: NSTextField = {
+        let label = NSTextField(frame: .zero)
+        label.isEditable = false
+        label.drawsBackground = false
+        label.isBordered = false
+        label.textColor = NSColor.secondaryLabelColor
+        label.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let bodyLabel: NSTextField = {
+        let label = NSTextField(frame: .zero)
+        label.isSelectable = true
+        label.isEditable = false
+        label.drawsBackground = false
+        label.isBordered = false
+        label.allowsEditingTextAttributes = true
+        label.usesSingleLineMode = false
+        label.cell?.wraps = true
+        label.cell?.lineBreakMode = .byWordWrapping
+        label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(250), for: .horizontal)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     private static let bigEmojiFont = NSFont.systemFont(ofSize: NSFont.systemFontSize * Settings.bigEmojiSizeFactor)
     private static let defaultFont = NSFont.systemFont(ofSize: NSFont.systemFontSize)
 
-    private static var _messageDateFormatter: DateFormatter?
-    private static var messageDateFormatter: DateFormatter {
-        if _messageDateFormatter == nil {
-            let formatter = DateFormatter()
-            formatter.timeStyle = .short
-            formatter.dateStyle = .none
-            _messageDateFormatter = formatter
-        }
-        return _messageDateFormatter!
-    }
+    private static let messageDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .none
+        return formatter
+    }()
 
-    private static var _messageDetailDateFormatter: DateFormatter?
-    private static var messageDetailDateFormatter: DateFormatter {
-        if _messageDetailDateFormatter == nil {
-            let formatter = DateFormatter()
-            formatter.timeStyle = .medium
-            formatter.dateStyle = .medium
-            _messageDetailDateFormatter = formatter
-        }
-        return _messageDetailDateFormatter!
-    }
+    private static let messageDetailDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .medium
+        formatter.dateStyle = .medium
+        return formatter
+    }()
 
     var message: Message? {
         didSet {
             guard let message = message else { return }
             configure(message)
         }
+    }
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+
+        addSubview(avatarView)
+        addSubview(displaynameLabel)
+        addSubview(dateLabel)
+        addSubview(bodyLabel)
+
+        NSLayoutConstraint.activate([
+            avatarView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .ALDefaultSpacing),
+            avatarView.topAnchor.constraint(equalTo: topAnchor),
+            avatarView.heightAnchor.constraint(equalToConstant: 42),
+            avatarView.widthAnchor.constraint(equalTo: avatarView.heightAnchor),
+
+            displaynameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: .ALDefaultSpacing),
+            displaynameLabel.topAnchor.constraint(equalTo: topAnchor),
+            displaynameLabel.firstBaselineAnchor.constraint(equalTo: dateLabel.firstBaselineAnchor),
+
+            dateLabel.leadingAnchor.constraint(equalTo: displaynameLabel.trailingAnchor, constant: .ALDefaultSpacing),
+            dateLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+
+            NSLayoutConstraint(item: bodyLabel, attribute: .top, relatedBy: .equal, toItem: displaynameLabel, attribute: .bottom, multiplier: 1.0, constant: .ALDefaultSpacing),
+            bodyLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.ALDefaultSpacing),
+            bodyLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            bodyLabel.leadingAnchor.constraint(equalTo: displaynameLabel.leadingAnchor),
+        ])
+    }
+
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func configure(_ message: Message) {
