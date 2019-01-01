@@ -33,7 +33,6 @@ class TextMessageView: NSView {
         stackView.orientation = .vertical
         stackView.alignment = .leading
         stackView.distribution = .fill
-        stackView.setClippingResistancePriority(NSLayoutConstraint.Priority(249), for: .vertical)
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
