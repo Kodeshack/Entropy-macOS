@@ -10,7 +10,7 @@ PODS:
     - OLMKit/olmcpp (= 3.0.0)
   - OLMKit/olmc (3.0.0)
   - OLMKit/olmcpp (3.0.0)
-  - SwiftFormat/CLI (0.37.1)
+  - SwiftFormat/CLI (0.37.2)
 
 DEPENDENCIES:
   - EntropyKit (from `https://github.com/Kodeshack/EntropyKit.git`, branch `master`)
@@ -31,7 +31,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   EntropyKit:
-    :commit: 68dde6c77921830ad2fbfae20d658f834ddc484c
+    :commit: a89672b0736c437943512753a649ab640dc7f755
     :git: https://github.com/Kodeshack/EntropyKit.git
 
 SPEC CHECKSUMS:
@@ -39,7 +39,7 @@ SPEC CHECKSUMS:
   EntropyKit: 46b9fc2e719abdba300d5ac67ef855d9e0286675
   GRDB.swift: 2ea998984ce0d8b869917e1452b5d87f1ec5e0dd
   OLMKit: 88eda69110489f817d59bcb4353b7c247570aa4f
-  SwiftFormat: 550bd718695b44b1f0cbb0185b8b713fa8c137ac
+  SwiftFormat: abbfb26dde4c6d683923cde153c88e10da9d7881
 
 PODFILE CHECKSUM: db275c88631978ccfcc6e78f274eaa1faba67d68
 
