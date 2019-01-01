@@ -13,16 +13,8 @@ class ImageMessageView: TextMessageView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
 
-        addSubview(imageView)
-
-        NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: displaynameLabel.leadingAnchor),
-            imageView.topAnchor.constraint(equalTo: bodyLabel.bottomAnchor, constant: .ALDefaultSpacing),
-            imageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.ALDefaultSpacing),
-            imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-            NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200),
-        ])
+        NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
+        stackView.addView(imageView, in: .bottom)
     }
 
     required init?(coder _: NSCoder) {

@@ -28,6 +28,17 @@ class TextMessageView: NSView {
         return label
     }()
 
+    let stackView: NSStackView = {
+        let stackView = NSStackView(frame: .zero)
+        stackView.orientation = .vertical
+        stackView.alignment = .leading
+        stackView.distribution = .fill
+        stackView.setClippingResistancePriority(NSLayoutConstraint.Priority(249), for: .vertical)
+
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+
     let bodyLabel: NSTextField = {
         let label = NSTextField(frame: .zero)
         label.isSelectable = true
@@ -73,7 +84,9 @@ class TextMessageView: NSView {
         addSubview(avatarView)
         addSubview(displaynameLabel)
         addSubview(dateLabel)
-        addSubview(bodyLabel)
+        addSubview(stackView)
+
+        stackView.addView(bodyLabel, in: .bottom)
 
         NSLayoutConstraint.activate([
             avatarView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .ALDefaultSpacing),
@@ -88,10 +101,10 @@ class TextMessageView: NSView {
             dateLabel.leadingAnchor.constraint(equalTo: displaynameLabel.trailingAnchor, constant: .ALDefaultSpacing),
             dateLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
 
-            NSLayoutConstraint(item: bodyLabel, attribute: .top, relatedBy: .equal, toItem: displaynameLabel, attribute: .bottom, multiplier: 1.0, constant: .ALDefaultSpacing),
-            bodyLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.ALDefaultSpacing),
-            bodyLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
-            bodyLabel.leadingAnchor.constraint(equalTo: displaynameLabel.leadingAnchor),
+            stackView.leadingAnchor.constraint(equalTo: displaynameLabel.leadingAnchor),
+            stackView.topAnchor.constraint(equalTo: displaynameLabel.bottomAnchor, constant: .ALDefaultSpacing),
+            stackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.ALDefaultSpacing),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 
