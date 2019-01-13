@@ -102,7 +102,7 @@ class TextMessageView: NSView {
 
             stackView.leadingAnchor.constraint(equalTo: displaynameLabel.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: displaynameLabel.bottomAnchor, constant: .ALDefaultSpacing),
-            stackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.ALDefaultSpacing),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.ALDefaultSpacing),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }

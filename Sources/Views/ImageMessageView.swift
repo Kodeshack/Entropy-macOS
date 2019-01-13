@@ -2,19 +2,26 @@ import AppKit
 import EntropyKit
 
 class ImageMessageView: TextMessageView {
-    private let imageView: NSImageView = {
-        let imageView = NSImageView(frame: .zero)
+    private let imageView: SimpleImageView = {
+        let imageView = SimpleImageView(frame: .zero)
         imageView.imageAlignment = .alignTopLeft
         imageView.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(250), for: .horizontal)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
+    private var ratioConstraint: NSLayoutConstraint?
+
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
 
-        NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
+        imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
+
         stackView.addView(imageView, in: .bottom)
+
+        let f = self.imageView.widthAnchor.constraint(equalTo: self.stackView.widthAnchor, multiplier: 1)
+        f.priority = NSLayoutConstraint.Priority(500)
+        f.isActive = true
     }
 
     required init?(coder _: NSCoder) {
@@ -34,6 +41,12 @@ class ImageMessageView: TextMessageView {
             guard let image = result.value else { return }
 
             self.imageView.image = image
+
+            self.ratioConstraint?.isActive = false
+            let ratio = image.size.height / image.size.width
+            self.ratioConstraint = self.imageView.heightAnchor.constraint(equalTo: self.imageView.widthAnchor, multiplier: ratio)
+            self.ratioConstraint?.priority = NSLayoutConstraint.Priority(750)
+            self.ratioConstraint?.isActive = true
         }
     }
 }
