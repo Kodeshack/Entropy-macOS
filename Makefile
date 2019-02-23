@@ -25,6 +25,7 @@ test:
 format:
 	@echo "+ $@"
 	@./Pods/SwiftFormat/CommandLineTool/swiftformat \
+		--swiftversion '4.2' \
 		Sources Tests
 
 reset-dev-team:

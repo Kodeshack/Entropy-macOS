@@ -20,7 +20,7 @@ class SidebarViewController: NSViewController {
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        if Entropy.default.rooms.count > 0 {
+        if !Entropy.default.rooms.isEmpty {
             outlineView.selectRowIndexes(IndexSet(arrayLiteral: 0), byExtendingSelection: false)
         }
     }

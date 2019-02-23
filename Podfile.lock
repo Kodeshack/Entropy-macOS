@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.8.0)
+  - Alamofire (4.8.1)
   - EntropyKit (0.1.0):
     - Alamofire
     - GRDB.swift
@@ -10,7 +10,7 @@ PODS:
     - OLMKit/olmcpp (= 3.0.0)
   - OLMKit/olmc (3.0.0)
   - OLMKit/olmcpp (3.0.0)
-  - SwiftFormat/CLI (0.37.2)
+  - SwiftFormat/CLI (0.39.3)
 
 DEPENDENCIES:
   - EntropyKit (from `https://github.com/Kodeshack/EntropyKit.git`, branch `master`)
@@ -31,15 +31,15 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   EntropyKit:
-    :commit: 0c4e1d3599b19227b39c13d99a636dae08f526e6
+    :commit: 3aad9de57d47b259b36df512b01cc293f284238f
     :git: https://github.com/Kodeshack/EntropyKit.git
 
 SPEC CHECKSUMS:
-  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   EntropyKit: 46b9fc2e719abdba300d5ac67ef855d9e0286675
   GRDB.swift: e10787d857b6b8135354b9e08fb23b4bb8e2fab7
   OLMKit: 88eda69110489f817d59bcb4353b7c247570aa4f
-  SwiftFormat: abbfb26dde4c6d683923cde153c88e10da9d7881
+  SwiftFormat: 2e67b7f1dd387e2ff8fe05e0846229361abe1c13
 
 PODFILE CHECKSUM: db275c88631978ccfcc6e78f274eaa1faba67d68
 
