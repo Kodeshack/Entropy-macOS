@@ -12,7 +12,7 @@ class DragDestinationView: NSView {
     }
 }
 
-protocol DragDestinationViewDelegate: class {
+protocol DragDestinationViewDelegate: AnyObject {
     func draggingEntered(forView view: DragDestinationView, sender: NSDraggingInfo) -> NSDragOperation
     func performDragOperation(forView view: DragDestinationView, sender: NSDraggingInfo) -> Bool
 }

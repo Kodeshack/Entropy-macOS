@@ -329,7 +329,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Entropy/Pods-Entropy-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Entropy/Pods-Entropy-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/EntropyKit/EntropyKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
@@ -344,7 +344,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Entropy/Pods-Entropy-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Entropy/Pods-Entropy-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F08570D0A870BFD58A62CDDE /* [CP] Check Pods Manifest.lock */ = {
