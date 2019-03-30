@@ -26,8 +26,8 @@ class LoginViewController: NSViewController {
             let query: NSDictionary = [
                 kSecClass: kSecClassGenericPassword,
                 kSecAttrService: Bundle.main.applicationName,
-                kSecReturnAttributes: kCFBooleanTrue,
-                kSecReturnData: kCFBooleanTrue,
+                kSecReturnAttributes: kCFBooleanTrue!,
+                kSecReturnData: kCFBooleanTrue!,
                 kSecMatchLimit: kSecMatchLimitOne,
             ]
 

@@ -245,11 +245,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Kodeshack;
 				TargetAttributes = {
 					001E5B4A20E76D34005B8A1D = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -258,6 +259,7 @@
 					};
 					001E5B5C20E76D36005B8A1D = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1020;
 						TestTargetID = 001E5B4A20E76D34005B8A1D;
 					};
 				};
@@ -544,7 +546,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kodeshack.Entropy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -566,7 +568,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kodeshack.Entropy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -589,7 +591,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kodeshack.EntropyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Entropy.app/Contents/MacOS/Entropy";
 			};
 			name = Debug;
@@ -613,7 +615,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kodeshack.EntropyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Entropy.app/Contents/MacOS/Entropy";
 			};
 			name = Release;
