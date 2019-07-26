@@ -70,8 +70,8 @@ class LoginViewController: NSViewController {
 
         let credentialsResult = Validation.validateLoginCredentials(username: username.stringValue, password: password.stringValue, homeserver: homeserver.stringValue)
 
-        guard let credentials = credentialsResult.value else {
-            showLoginError(credentialsResult.error)
+        guard let credentials = credentialsResult.success else {
+            showLoginError(credentialsResult.failure)
             return
         }
 
@@ -80,7 +80,7 @@ class LoginViewController: NSViewController {
         // No need to set the password as we can't validate and thus not change it anyway.
 
         Entropy.default.login(credentials: credentials) { result in
-            if let error = result.error {
+            if let error = result.failure {
                 self.showLoginError(error)
                 return
             }

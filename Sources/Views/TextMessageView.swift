@@ -116,7 +116,7 @@ class TextMessageView: NSView {
             // View not recycled?
             guard sender.id == userID else { return }
 
-            if let image = result.value {
+            if let image = result.success {
                 self.avatarView.image = image
             }
         }
