@@ -41,11 +41,11 @@ extension SidebarViewController: NSOutlineViewDataSource {
     }
 
     func outlineView(_: NSOutlineView, isItemExpandable _: Any) -> Bool {
-        return false
+        false
     }
 
     func outlineView(_: NSOutlineView, child index: Int, ofItem _: Any?) -> Any {
-        return Entropy.default.rooms[index]
+        Entropy.default.rooms[index]
     }
 }
 

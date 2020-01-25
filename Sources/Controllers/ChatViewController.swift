@@ -74,7 +74,7 @@ extension ChatViewController {
 
 extension ChatViewController: NSTableViewDataSource {
     func numberOfRows(in _: NSTableView) -> Int {
-        return messages?.count ?? 0
+        messages?.count ?? 0
     }
 
     private func configure(cell: NSView, at row: Int) {
@@ -158,7 +158,7 @@ extension ChatViewController: NSTextViewDelegate {
 
 extension ChatViewController: DragDestinationViewDelegate {
     func draggingEntered(forView _: DragDestinationView, sender: NSDraggingInfo) -> NSDragOperation {
-        return sender.draggingSourceOperationMask.intersection([.copy])
+        sender.draggingSourceOperationMask.intersection([.copy])
     }
 
     func performDragOperation(forView _: DragDestinationView, sender: NSDraggingInfo) -> Bool {

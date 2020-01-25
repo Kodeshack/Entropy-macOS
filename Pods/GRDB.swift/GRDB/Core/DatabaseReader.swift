@@ -1,9 +1,9 @@
 #if SWIFT_PACKAGE
-    import CSQLite
+import CSQLite
 #elseif GRDBCIPHER
-    import SQLCipher
+import SQLCipher
 #elseif !GRDBCUSTOMSQLITE && !GRDBCIPHER
-    import SQLite3
+import SQLite3
 #endif
 
 /// The protocol for all types that can fetch values from a database.
@@ -21,10 +21,71 @@
 /// connection to the database. Should you have to cope with external
 /// connections, protect yourself with transactions, and be ready to setup a
 /// [busy handler](https://www.sqlite.org/c3ref/busy_handler.html).
-public protocol DatabaseReader : class {
+public protocol DatabaseReader: AnyObject {
     
     /// The database configuration
     var configuration: Configuration { get }
+    
+    // MARK: - Interrupting Database Operations
+    
+    /// This method causes any pending database operation to abort and return at
+    /// its earliest opportunity.
+    ///
+    /// It can be called from any thread.
+    ///
+    /// A call to `interrupt()` that occurs when there are no running SQL
+    /// statements is a no-op and has no effect on SQL statements that are
+    /// started after `interrupt()` returns.
+    ///
+    /// A database operation that is interrupted will throw a DatabaseError with
+    /// code SQLITE_INTERRUPT. If the interrupted SQL operation is an INSERT,
+    /// UPDATE, or DELETE that is inside an explicit transaction, then the
+    /// entire transaction will be rolled back automatically. If the rolled back
+    /// transaction was started by a transaction-wrapping method such as
+    /// `DatabaseWriter.write` or `Database.inTransaction`, then all database
+    /// accesses will throw a DatabaseError with code SQLITE_ABORT until the
+    /// wrapping method returns.
+    ///
+    /// For example:
+    ///
+    ///     try dbQueue.write { db in
+    ///         // interrupted:
+    ///         try Player(...).insert(db)     // throws SQLITE_INTERRUPT
+    ///         // not executed:
+    ///         try Player(...).insert(db)
+    ///     }                                  // throws SQLITE_INTERRUPT
+    ///
+    ///     try dbQueue.write { db in
+    ///         do {
+    ///             // interrupted:
+    ///             try Player(...).insert(db) // throws SQLITE_INTERRUPT
+    ///         } catch { }
+    ///         try Player(...).insert(db)     // throws SQLITE_ABORT
+    ///     }                                  // throws SQLITE_ABORT
+    ///
+    ///     try dbQueue.write { db in
+    ///         do {
+    ///             // interrupted:
+    ///             try Player(...).insert(db) // throws SQLITE_INTERRUPT
+    ///         } catch { }
+    ///     }                                  // throws SQLITE_ABORT
+    ///
+    /// When an application creates transaction without a transaction-wrapping
+    /// method, no SQLITE_ABORT error warns of aborted transactions:
+    ///
+    ///     try dbQueue.inDatabase { db in // or dbPool.writeWithoutTransaction
+    ///         try db.beginTransaction()
+    ///         do {
+    ///             // interrupted:
+    ///             try Player(...).insert(db) // throws SQLITE_INTERRUPT
+    ///         } catch { }
+    ///         try Player(...).insert(db)     // success
+    ///         try db.commit()                // throws SQLITE_ERROR "cannot commit - no transaction is active"
+    ///     }
+    ///
+    /// Both SQLITE_ABORT and SQLITE_INTERRUPT errors can be checked with the
+    /// `DatabaseError.isInterruptionError` property.
+    func interrupt()
     
     // MARK: - Read From Database
     
@@ -220,10 +281,14 @@ extension DatabaseReader {
         try backup(to: writer, afterBackupInit: nil, afterBackupStep: nil)
     }
     
-    func backup(to writer: DatabaseWriter, afterBackupInit: (() -> ())?, afterBackupStep: (() -> ())?) throws {
+    func backup(to writer: DatabaseWriter, afterBackupInit: (() -> Void)?, afterBackupStep: (() -> Void)?) throws {
         try read { dbFrom in
             try writer.writeWithoutTransaction { dbDest in
-                try Database.backup(from: dbFrom, to: dbDest, afterBackupInit: afterBackupInit, afterBackupStep: afterBackupStep)
+                try Database.backup(
+                    from: dbFrom,
+                    to: dbDest,
+                    afterBackupInit: afterBackupInit,
+                    afterBackupStep: afterBackupStep)
             }
         }
     }
@@ -233,7 +298,7 @@ extension DatabaseReader {
 ///
 /// Instances of AnyDatabaseReader forward their methods to an arbitrary
 /// underlying database reader.
-public final class AnyDatabaseReader : DatabaseReader {
+public final class AnyDatabaseReader: DatabaseReader {
     private let base: DatabaseReader
     
     /// Creates a database reader that wraps a base database reader.
@@ -244,6 +309,13 @@ public final class AnyDatabaseReader : DatabaseReader {
     /// :nodoc:
     public var configuration: Configuration {
         return base.configuration
+    }
+    
+    // MARK: - Interrupting Database Operations
+    
+    /// :nodoc:
+    public func interrupt() {
+        base.interrupt()
     }
     
     // MARK: - Reading from Database

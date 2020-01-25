@@ -44,7 +44,9 @@ extension SQLInterpolation {
     ///     let request: SQLRequest<String> = "
     ///         SELECT \(CodingKey.name) FROM player
     ///         """
-    public mutating func appendInterpolation(_ codingKey: SQLExpressible & SQLSelectable & SQLOrderingTerm & CodingKey) {
+    public mutating func appendInterpolation(
+        _ codingKey: SQLExpressible & SQLSelectable & SQLOrderingTerm & CodingKey)
+    {
         sql += codingKey.sqlExpression.expressionSQL(&context, wrappedInParenthesis: false)
     }
     
@@ -73,6 +75,15 @@ extension SQLInterpolation {
         appendInterpolation(Column(codingKey.stringValue))
     }
     
+    // When a value is both an expression and a sequence of expressions,
+    // favor the expression side. Use case: Foundation.Data interpolation.
+    /// :nodoc:
+    public mutating func appendInterpolation<T>(_ expressible: T)
+        where T: Sequence, T.Element: SQLExpressible, T: SQLExpressible
+    {
+        sql += expressible.sqlExpression.expressionSQL(&context, wrappedInParenthesis: false)
+    }
+
     /// Appends a sequence of expressions, wrapped in parentheses.
     ///
     ///     // SELECT * FROM player WHERE id IN (?,?,?)
@@ -133,7 +144,7 @@ extension SQLInterpolation {
     public mutating func appendInterpolation(_ ordering: SQLOrderingTerm) {
         sql += ordering.orderingTermSQL(&context)
     }
-
+    
     /// Appends the request SQL, wrapped in parentheses
     ///
     ///     // SELECT name FROM player WHERE score = (SELECT MAX(score) FROM player)

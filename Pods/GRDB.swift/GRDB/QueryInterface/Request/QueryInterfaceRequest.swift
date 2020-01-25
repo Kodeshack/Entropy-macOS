@@ -28,7 +28,7 @@
 ///     }
 ///
 /// See https://github.com/groue/GRDB.swift#the-query-interface
-public struct QueryInterfaceRequest<T>: DerivableRequest {
+public struct QueryInterfaceRequest<T> {
     var query: SQLQuery
     
     init(query: SQLQuery) {
@@ -86,7 +86,7 @@ extension QueryInterfaceRequest: FetchRequest {
     /// - parameter db: A database connection.
     /// :nodoc:
     public func databaseRegion(_ db: Database) throws -> DatabaseRegion {
-        var region = try SQLQueryGenerator(query).databaseRegion(db)
+        var region = try SQLQueryGenerator(query).makeSelectStatement(db).databaseRegion
         
         // Iterate all prefetched associations
         var fifo = query.relation.prefetchedAssociations
@@ -101,11 +101,11 @@ extension QueryInterfaceRequest: FetchRequest {
             let prefetchedRelation = association
                 .mapPivotRelation { $0.qualified(with: pivotAlias) }
                 .destinationRelation(fromOriginRows: { _ in [] /* no origin row */ })
-                .annotated(with: pivotColumns.map { pivotAlias[Column($0)].aliased("grdb_\($0)") })
+                .annotated(with: pivotColumns.map { pivotAlias[Column($0)].forKey("grdb_\($0)") })
             let prefetchedQuery = SQLQuery(relation: prefetchedRelation)
             
             // Union region
-            try region.formUnion(SQLQueryGenerator(prefetchedQuery).databaseRegion(db))
+            try region.formUnion(SQLQueryGenerator(prefetchedQuery).makeSelectStatement(db).databaseRegion)
             
             // Append nested prefetched associations (support for
             // A.including(all: A.bs.including(all: B.cs))
@@ -143,7 +143,9 @@ extension QueryInterfaceRequest: SelectionRequest {
     ///         let request = Player.all().select([max(Column("score"))], as: Int.self)
     ///         let maxScore: Int? = try request.fetchOne(db)
     ///     }
-    public func select<RowDecoder>(_ selection: [SQLSelectable], as type: RowDecoder.Type) -> QueryInterfaceRequest<RowDecoder> {
+    public func select<RowDecoder>(_ selection: [SQLSelectable], as type: RowDecoder.Type = RowDecoder.self)
+        -> QueryInterfaceRequest<RowDecoder>
+    {
         return mapQuery { $0.select(selection) }.asRequest(of: RowDecoder.self)
     }
     
@@ -155,7 +157,9 @@ extension QueryInterfaceRequest: SelectionRequest {
     ///         let request = Player.all().select(max(Column("score")), as: Int.self)
     ///         let maxScore: Int? = try request.fetchOne(db)
     ///     }
-    public func select<RowDecoder>(_ selection: SQLSelectable..., as type: RowDecoder.Type) -> QueryInterfaceRequest<RowDecoder> {
+    public func select<RowDecoder>(_ selection: SQLSelectable..., as type: RowDecoder.Type = RowDecoder.self)
+        -> QueryInterfaceRequest<RowDecoder>
+    {
         return select(selection, as: type)
     }
     
@@ -167,7 +171,12 @@ extension QueryInterfaceRequest: SelectionRequest {
     ///         let request = Player.all().select(sql: "max(score)", as: Int.self)
     ///         let maxScore: Int? = try request.fetchOne(db)
     ///     }
-    public func select<RowDecoder>(sql: String, arguments: StatementArguments = StatementArguments(), as type: RowDecoder.Type) -> QueryInterfaceRequest<RowDecoder> {
+    public func select<RowDecoder>(
+        sql: String,
+        arguments: StatementArguments = StatementArguments(),
+        as type: RowDecoder.Type = RowDecoder.self)
+        -> QueryInterfaceRequest<RowDecoder>
+    {
         return select(literal: SQLLiteral(sql: sql, arguments: arguments), as: type)
     }
     
@@ -198,7 +207,11 @@ extension QueryInterfaceRequest: SelectionRequest {
     ///                 as: String.self)
     ///         let name: String? = try request.fetchOne(db)
     ///     }
-    public func select<RowDecoder>(literal sqlLiteral: SQLLiteral, as type: RowDecoder.Type) -> QueryInterfaceRequest<RowDecoder> {
+    public func select<RowDecoder>(
+        literal sqlLiteral: SQLLiteral,
+        as type: RowDecoder.Type = RowDecoder.self)
+        -> QueryInterfaceRequest<RowDecoder>
+    {
         return select(SQLSelectionLiteral(literal: sqlLiteral), as: type)
     }
     
@@ -210,22 +223,13 @@ extension QueryInterfaceRequest: SelectionRequest {
     ///         .select([Column("id"), Column("email")])
     ///         .annotated(with: [Column("name")])
     public func annotated(with selection: [SQLSelectable]) -> QueryInterfaceRequest {
-        // TODO: test consumption of
-        //
-        //      let author = TableAlias()
-        //      let request = Book
-        //          .annotated(with: [author[Column("name")]])
-        //          .joining(requireed: Book.author)
-        //
-        // The problem is the "author.name" column. Can we consume it as "name"?
-        // From raw rows? From copied rows?
         return mapQuery { $0.annotated(with: selection) }
     }
 }
 
 extension QueryInterfaceRequest: FilteredRequest {
     // MARK: Request Derivation
-
+    
     /// Creates a request with the provided *predicate promise* added to the
     /// eventual set of already applied predicates.
     ///
@@ -235,7 +239,6 @@ extension QueryInterfaceRequest: FilteredRequest {
     public func filter(_ predicate: @escaping (Database) throws -> SQLExpressible) -> QueryInterfaceRequest {
         return mapQuery { $0.filter(predicate) }
     }
-
 }
 
 extension QueryInterfaceRequest: OrderedRequest {
@@ -298,7 +301,7 @@ extension QueryInterfaceRequest: AggregatingRequest {
     }
 }
 
-extension QueryInterfaceRequest: JoinableRequest {
+extension QueryInterfaceRequest: _JoinableRequest {
     /// :nodoc:
     public func _including(all association: SQLAssociation) -> QueryInterfaceRequest {
         return mapQuery { $0._including(all: association) }
@@ -325,10 +328,12 @@ extension QueryInterfaceRequest: JoinableRequest {
     }
 }
 
+extension QueryInterfaceRequest: JoinableRequest where T: TableRecord { }
+
 extension QueryInterfaceRequest {
     
     // MARK: Request Derivation
-
+    
     /// Creates a request which returns distinct rows.
     ///
     ///     // SELECT DISTINCT * FROM player
@@ -460,9 +465,11 @@ extension QueryInterfaceRequest: TableRequest {
     }
 }
 
+extension QueryInterfaceRequest: DerivableRequest where T: TableRecord { }
+
 extension QueryInterfaceRequest where T: MutablePersistableRecord {
     
-    // MARK: Deleting
+    // MARK: Batch Delete
     
     /// Deletes matching rows; returns the number of deleted rows.
     ///
@@ -474,12 +481,75 @@ extension QueryInterfaceRequest where T: MutablePersistableRecord {
         try SQLQueryGenerator(query).makeDeleteStatement(db).execute()
         return db.changesCount
     }
+    
+    // MARK: Batch Update
+    
+    /// Updates matching rows; returns the number of updated rows.
+    ///
+    /// For example:
+    ///
+    ///     try dbQueue.write { db in
+    ///         // UPDATE player SET score = 0
+    ///         try Player.all().updateAll(db, [Column("score") <- 0])
+    ///     }
+    ///
+    /// - parameter db: A database connection.
+    /// - parameter conflictResolution: A policy for conflict resolution,
+    ///   defaulting to the record's persistenceConflictPolicy.
+    /// - parameter assignments: An array of column assignments.
+    /// - returns: The number of updated rows.
+    /// - throws: A DatabaseError is thrown whenever an SQLite error occurs.
+    @discardableResult
+    public func updateAll(
+        _ db: Database,
+        onConflict conflictResolution: Database.ConflictResolution? = nil,
+        _ assignments: [ColumnAssignment]) throws -> Int
+    {
+        let conflictResolution = conflictResolution ?? RowDecoder.persistenceConflictPolicy.conflictResolutionForUpdate
+        guard let updateStatement = try SQLQueryGenerator(query).makeUpdateStatement(
+            db,
+            conflictResolution: conflictResolution,
+            assignments: assignments) else
+        {
+            // database not hit
+            return 0
+        }
+        try updateStatement.execute()
+        return db.changesCount
+    }
+    
+    /// Updates matching rows; returns the number of updated rows.
+    ///
+    /// For example:
+    ///
+    ///     try dbQueue.write { db in
+    ///         // UPDATE player SET score = 0
+    ///         try Player.all().updateAll(db, Column("score") <- 0)
+    ///     }
+    ///
+    /// - parameter db: A database connection.
+    /// - parameter conflictResolution: A policy for conflict resolution,
+    ///   defaulting to the record's persistenceConflictPolicy.
+    /// - parameter assignment: A column assignment.
+    /// - parameter otherAssignments: Eventual other column assignments.
+    /// - returns: The number of updated rows.
+    /// - throws: A DatabaseError is thrown whenever an SQLite error occurs.
+    @discardableResult
+    public func updateAll(
+        _ db: Database,
+        onConflict conflictResolution: Database.ConflictResolution? = nil,
+        _ assignment: ColumnAssignment,
+        _ otherAssignments: ColumnAssignment...)
+        throws -> Int
+    {
+        return try updateAll(db, onConflict: conflictResolution, [assignment] + otherAssignments)
+    }
 }
 
 // MARK: - Eager loading of hasMany associations
 
 /// Append rows from prefetched associations into the argument rows.
-fileprivate func prefetch(_ db: Database, associations: [SQLAssociation], in rows: [Row]) throws {
+private func prefetch(_ db: Database, associations: [SQLAssociation], in rows: [Row]) throws {
     guard let firstRow = rows.first else {
         // No rows -> no prefetch
         return
@@ -517,7 +587,7 @@ fileprivate func prefetch(_ db: Database, associations: [SQLAssociation], in row
             let prefetchedRelation = association
                 .mapPivotRelation { $0.qualified(with: pivotAlias) }
                 .destinationRelation(fromOriginRows: { _ in rows })
-                .annotated(with: pivotColumns.map { pivotAlias[Column($0)].aliased("grdb_\($0)") })
+                .annotated(with: pivotColumns.map { pivotAlias[Column($0)].forKey("grdb_\($0)") })
             prefetchedRows = try QueryInterfaceRequest(relation: prefetchedRelation)
                 .fetchAll(db)
                 .grouped(byDatabaseValuesOnColumns: pivotColumns.map { "grdb_\($0)" })
@@ -557,4 +627,95 @@ extension Row {
             return index
         }
     }
+}
+
+// MARK: - ColumnAssignment
+
+precedencegroup ColumnAssignment {
+    associativity: left
+    assignment: true
+    lowerThan: AssignmentPrecedence
+}
+
+infix operator <- : ColumnAssignment
+
+/// A ColumnAssignment can update rows in the database.
+///
+/// You create an assignment from a column and an assignment operator, such as
+/// `<-` or `+=`:
+///
+///     try dbQueue.write { db in
+///         // UPDATE player SET score = 0
+///         let assignment = Column("score") <- 0
+///         try Player.updateAll(db, assignment)
+///     }
+public struct ColumnAssignment {
+    var column: ColumnExpression
+    var value: SQLExpressible
+}
+
+/// Creates an assignment to a value.
+///
+///     Column("valid") <- true
+///     Column("score") <- 0
+///     Column("score") <- Column("score") + Column("bonus")
+///
+///     try dbQueue.write { db in
+///         // UPDATE player SET score = 0
+///         try Player.updateAll(db, Column("score") <- 0)
+///     }
+public func <- (column: ColumnExpression, value: SQLExpressible) -> ColumnAssignment {
+    return ColumnAssignment(column: column, value: value)
+}
+
+/// Creates an assignment that adds a value
+///
+///     Column("score") += 1
+///     Column("score") += Column("bonus")
+///
+///     try dbQueue.write { db in
+///         // UPDATE player SET score = score + 1
+///         try Player.updateAll(db, Column("score") += 1)
+///     }
+public func += (column: ColumnExpression, value: SQLExpressible) -> ColumnAssignment {
+    return column <- column + value
+}
+
+/// Creates an assignment that subtracts a value
+///
+///     Column("score") -= 1
+///     Column("score") -= Column("bonus")
+///
+///     try dbQueue.write { db in
+///         // UPDATE player SET score = score - 1
+///         try Player.updateAll(db, Column("score") -= 1)
+///     }
+public func -= (column: ColumnExpression, value: SQLExpressible) -> ColumnAssignment {
+    return column <- column - value
+}
+
+/// Creates an assignment that multiplies by a value
+///
+///     Column("score") *= 2
+///     Column("score") *= Column("factor")
+///
+///     try dbQueue.write { db in
+///         // UPDATE player SET score = score * 2
+///         try Player.updateAll(db, Column("score") *= 2)
+///     }
+public func *= (column: ColumnExpression, value: SQLExpressible) -> ColumnAssignment {
+    return column <- column * value
+}
+
+/// Creates an assignment that divides by a value
+///
+///     Column("score") /= 2
+///     Column("score") /= Column("factor")
+///
+///     try dbQueue.write { db in
+///         // UPDATE player SET score = score / 2
+///         try Player.updateAll(db, Column("score") /= 2)
+///     }
+public func /= (column: ColumnExpression, value: SQLExpressible) -> ColumnAssignment {
+    return column <- column / value
 }

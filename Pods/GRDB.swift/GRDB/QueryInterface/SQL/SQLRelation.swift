@@ -1,4 +1,5 @@
-/// A "relation", as defined by the [relational terminology](https://en.wikipedia.org/wiki/Relational_database#Terminology),
+/// A "relation", as defined by the [relational
+/// terminology](https://en.wikipedia.org/wiki/Relational_database#Terminology),
 /// is "a set of tuples sharing the same attributes; a set of columns and rows."
 ///
 /// SQLRelation is defined with a selection, a source table of query, and an
@@ -166,8 +167,14 @@ struct SQLRelation {
             case .allPrefetched:
                 return [child.makeAssociationForKey(key)]
             case .oneOptional, .oneRequired, .allNotPrefetched:
-                return child.relation.prefetchedAssociations.map {
-                    $0.through(child.makeAssociationForKey(key))
+                return child.relation.prefetchedAssociations.map { association in
+                    // Remove redundant pivot child
+                    let pivotKey = association.pivot.keyName
+                    let child = child.mapRelation { relation in
+                        assert(relation.children[pivotKey] != nil)
+                        return relation.removingChild(forKey: pivotKey)
+                    }
+                    return association.through(child.makeAssociationForKey(key))
                 }
             }
         }
@@ -195,12 +202,20 @@ extension SQLRelation {
         return relation
     }
     
+    /// Removes all selections from chidren
+    func selectOnly(_ selection: [SQLSelectable]) -> SQLRelation {
+        var relation = self
+        relation.selection = selection
+        relation.children = relation.children.mapValues { $0.mapRelation { $0.selectOnly([]) } }
+        return relation
+    }
+    
     func annotated(with selection: [SQLSelectable]) -> SQLRelation {
         var relation = self
         relation.selection.append(contentsOf: selection)
         return relation
     }
-
+    
     func filter(_ predicate: @escaping (Database) throws -> SQLExpressible) -> SQLRelation {
         var relation = self
         relation.filtersPromise = relation.filtersPromise.flatMap { filters in
@@ -238,12 +253,6 @@ extension SQLRelation {
 }
 
 extension SQLRelation {
-    func deletingChildren() -> SQLRelation {
-        var relation = self
-        relation.children = [:]
-        return relation
-    }
-    
     /// Returns a relation extended with an association.
     ///
     /// This method provides support for public joining methods such
@@ -277,10 +286,10 @@ extension SQLRelation {
     /// as HasManyThrough, which have any number of pivot relations between the
     /// origin and the destination.
     func appendingChild(for association: SQLAssociation, kind: SQLRelation.Child.Kind) -> SQLRelation {
+        // Preserve association cardinality in intermediate steps of
+        // including(all:), and force desired cardinality otherwize
         let childCardinality = (kind == .allNotPrefetched)
-            // preserve association cardinality in intermediate steps of including(all:)
             ? association.destination.cardinality
-            // force desired cardinality otherwize
             : kind.cardinality
         let childKey = association.destination.key.name(for: childCardinality)
         let child = SQLRelation.Child(
@@ -347,12 +356,27 @@ extension SQLRelation {
         if let existingChild = relation.children.removeValue(forKey: key) {
             guard let mergedChild = existingChild.merged(with: child) else {
                 // can't merge
-                fatalError("The association key \"\(key)\" is ambiguous. Use the Association.forKey(_:) method is order to disambiguate.")
+                fatalError("""
+                    The association key \"\(key)\" is ambiguous. \
+                    Use the Association.forKey(_:) method is order to disambiguate.
+                    """)
             }
             relation.children.appendValue(mergedChild, forKey: key)
         } else {
             relation.children.appendValue(child, forKey: key)
         }
+        return relation
+    }
+    
+    func removingChild(forKey key: String) -> SQLRelation {
+        var relation = self
+        relation.children.removeValue(forKey: key)
+        return relation
+    }
+    
+    func filteringChildren(_ included: (Child) throws -> Bool) rethrows -> SQLRelation {
+        var relation = self
+        relation.children = try relation.children.filter { try included($1) }
         return relation
     }
 }
@@ -387,7 +411,7 @@ enum SQLSource {
     
     func qualified(with alias: TableAlias) -> SQLSource {
         switch self {
-        case .table(let tableName, let sourceAlias):
+        case let .table(tableName, sourceAlias):
             if let sourceAlias = sourceAlias {
                 alias.becomeProxy(of: sourceAlias)
                 return self
@@ -395,7 +419,7 @@ enum SQLSource {
                 alias.setTableName(tableName)
                 return .table(tableName: tableName, alias: alias)
             }
-        case .query(let query):
+        case let .query(query):
             return .query(query.qualified(with: alias))
         }
     }
@@ -612,16 +636,16 @@ struct SQLAssociationCondition: Equatable {
             // Join on a multiple columns.
             // ((table.a = 1) AND (table.b = 2)) OR ((table.a = 3) AND (table.b = 4)) ...
             return leftRows
-                .map { leftRow in
+                .map({ leftRow in
                     // (table.a = 1) AND (table.b = 2)
                     columnMappings
-                        .map { columns -> SQLExpression in
+                        .map({ columns -> SQLExpression in
                             let rightColumn = QualifiedColumn(columns.right, alias: rightAlias)
                             let leftValue = leftRow[columns.left] as DatabaseValue
                             return rightColumn == leftValue
-                        }
+                        })
                         .joined(operator: .and)
-                }
+                })
                 .joined(operator: .or)
         }
     }
@@ -774,7 +798,7 @@ extension SQLRelation.Child.Kind {
             //   .including(all: associationToDestinationThroughPivot)
             //   .including(all: associationToPivot)
             fatalError("Not implemented: merging a direct association and an indirect one with including(all:)")
-
+            
         case (.allNotPrefetched, .allNotPrefetched):
             // Equivalent to Record.including(all: association)
             //
